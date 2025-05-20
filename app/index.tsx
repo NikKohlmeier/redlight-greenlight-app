@@ -27,7 +27,7 @@ export default function Index() {
 
 	return (
 		<>
-		// Hide the default header
+		{/* Get rid of the header that Expo slaps in there */}
 		<Stack.Screen options={{ headerShown: false }} />
 
 		<View
