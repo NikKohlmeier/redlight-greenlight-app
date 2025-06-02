@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
         margin: 10,
         width: 100,
         height: 100,
+        borderWidth: 10,
+        borderColor: 'white',
+        borderStyle: 'solid',
     },
 });
 
