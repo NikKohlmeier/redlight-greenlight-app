@@ -1,21 +1,41 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 interface HistoryItemProps {
     color: string,
 }
 
 const HistoryItem: React.FC<HistoryItemProps> = ({ color }) => {
+    // Get window width
+    const windowWidth = Dimensions.get('window').width;
+
+    // Desired number of columns
+    const numberOfColumns = 6;
+
+    // Desired margin between items horizontally
+    const itemMargin = 5; // You can adjust this value
+
+    // Calculate item width
+    const baseItemWidth = windowWidth / numberOfColumns;
+    const itemWidth = baseItemWidth - itemMargin * 2; // Subtract margin from both sides
+
     return (
-        <View style={[styles.historyItem, { backgroundColor: color }]} />
+        <View style={[
+            styles.historyItemBase,
+            {
+                width: itemWidth,
+                height: itemWidth,
+                backgroundColor: color,
+            },
+            { marginHorizontal: itemMargin, marginVertical: itemMargin }
+        ]} />
     );
 };
 
 const styles = StyleSheet.create({
-    historyItem: {
-        width: 20,
-        height: 20,
-        margin: 2,
+    historyItemBase: {
+        // Base styles that don't depend on dynamic calculations
+        // For example, borderRadius, borderWidth, etc.
     },
 });
 
