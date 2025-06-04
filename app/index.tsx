@@ -3,13 +3,16 @@ import LightButton from "@/components/LightButton";
 import Scoreboard from "@/components/Scoreboard";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack } from "expo-router";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useRef } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   	const [redScore, setRedScore] = React.useState(0);
   	const [greenScore, setGreenScore] = React.useState(0);
 	const [historyTable, setHistoryTable] = React.useState<string[]>([]);
+
+	const scrollViewRef = useRef<ScrollView>(null);
+	
 	const appRed = "#de5959";
 	const appYellow = "#e0cb5e";
 	const appGreen = "#81bf7a";
@@ -17,16 +20,19 @@ export default function Index() {
 	function handleRedLight() {
 		setRedScore(redScore + 1);
 		setHistoryTable([...historyTable, appRed]);
+		scrollViewRef.current?.scrollToEnd({ animated: true });
 	}
 
 	function handleYellowLight() {
 		setGreenScore(greenScore + 2);
 		setHistoryTable([...historyTable, appYellow]);
+		scrollViewRef.current?.scrollToEnd({ animated: true });
 	}
 
 	function handleGreenLight() {
 		setGreenScore(greenScore + 1);
 		setHistoryTable([...historyTable, appGreen]);
+		scrollViewRef.current?.scrollToEnd({ animated: true });
 	}
 
 	function handleReset() {
@@ -57,11 +63,15 @@ export default function Index() {
 
 			<Scoreboard redScore={redScore} greenScore={greenScore} />
 
-			<View style={styles.historyTable}>
+			<ScrollView 
+				ref={scrollViewRef}
+				style={styles.historyTable} // Styles for the ScrollView itself (like maxHeight)
+				contentContainerStyle={styles.historyTableContent} // Styles for the content container (for grid layout)
+			>
 				{historyTable.map((color, index) => (
 					<HistoryItem color={color} key={index} />
 				))}
-			</View>
+			</ScrollView>
 
 			<View style={styles.buttonWrapper}>
 				<LightButton color="#de5959" onPress={handleRedLight} />
@@ -92,8 +102,11 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	historyTable: {
+		width: '100%',
+		maxHeight: 200,
+	},
+	historyTableContent: {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		width: '100%',
 	},
 });
