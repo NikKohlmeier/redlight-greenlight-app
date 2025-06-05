@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         margin: 10,
         borderWidth: 2,
         borderColor: 'black',
-        width: '40%',
+        minWidth: '40%',
         backgroundColor: 'white',
     },
     scoreText: {

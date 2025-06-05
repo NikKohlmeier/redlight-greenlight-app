@@ -1,5 +1,6 @@
 import HistoryItem from "@/components/HistoryItem";
 import LightButton from "@/components/LightButton";
+import Modal from "@/components/Modal";
 import Scoreboard from "@/components/Scoreboard";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack } from "expo-router";
@@ -10,6 +11,7 @@ export default function Index() {
   	const [redScore, setRedScore] = React.useState(0);
   	const [greenScore, setGreenScore] = React.useState(0);
 	const [historyTable, setHistoryTable] = React.useState<string[]>([]);
+	const [isResetModalVisible, setIsResetModalVisible] = React.useState(false);
 
 	const scrollViewRef = useRef<ScrollView>(null);
 	
@@ -36,9 +38,8 @@ export default function Index() {
 	}
 
 	function handleReset() {
-		setRedScore(0);
-		setGreenScore(0);
-		setHistoryTable([]);
+		if (!historyTable.length) return;
+		setIsResetModalVisible(true);
 	}
 
 	return (
@@ -80,6 +81,23 @@ export default function Index() {
 			</View>
 
 			<LightButton type="reset" onPress={handleReset} text="Reset" />
+			<Modal
+                isVisible={isResetModalVisible}
+                onClose={() => setIsResetModalVisible(false)}
+                title="Confirm Reset"
+                message="Are you sure you want to reset the scores?"
+                actions={[
+                    {
+                        text: 'Cancel',
+                        onPress: () => setIsResetModalVisible(false),
+						color: appRed,
+                    },
+                    {
+                        text: 'Confirm',
+                        onPress: () => { setRedScore(0); setGreenScore(0); setHistoryTable([]); setIsResetModalVisible(false); },
+						color: appGreen,
+                    },
+                ]}/>
 		</View>
 		</>
 	);
