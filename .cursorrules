@@ -1,0 +1,86 @@
+# Red Light Green Light - Cursor AI Rules
+
+## Project Overview
+React Native mobile game app (Expo) that gamifies commutes by tracking red/yellow/green traffic lights during drives. Users tap lights, compete for scores, and analyze driving patterns.
+
+## Tech Stack
+- **Framework**: Expo + React Native (v0.81.5)
+- **Language**: TypeScript
+- **Navigation**: React Navigation (Bottom Tabs)
+- **State**: React Context API (DriveContext)
+- **Storage**: AsyncStorage
+- **Web**: react-native-web (for web deployment)
+
+## Project Structure
+```
+App.tsx                    # Entry: Tab Navigator (Drive/History/Stats)
+src/
+  components/              # LightButton, ScoreBoard, HistoryGrid, HistoryItem, EndDriveModal, DriveCard
+  screens/                 # ActiveDriveScreen, HistoryScreen, StatsScreen
+  contexts/                # DriveContext (global state), ThemeContext
+  services/                # storage.ts (AsyncStorage wrapper)
+  utils/                   # responsive.ts (wp/hp/fontSize), sharing.ts
+  types/                   # Light, Drive, DriveStats, DriveContextType
+  constants/               # colors.ts (Colors.light/dark, LightColors, LightEmojis)
+```
+
+## Key Conventions
+
+### Styling
+- Use `StyleSheet.create()` at bottom of component files
+- Dynamic colors: `style={[styles.container, { backgroundColor: colors.card }]}`
+- Responsive: `wp()`, `hp()`, `fontSize()` from `src/utils/responsive.ts`
+- Base dimensions: iPhone 14 Pro (393x852)
+- Theme: `useTheme()` hook returns `{ isDark, colors }` from ThemeContext
+
+### State Management
+- **DriveContext**: Single source of truth for drives
+  - `currentDrive: Drive | null`
+  - `pastDrives: Drive[]`
+  - `stats: DriveStats`
+  - Actions: `startDrive()`, `addLight(color)`, `deleteLight(id)`, `endDrive(name?)`, `loadDrives()`, `deleteDrive(id)`
+
+### Data Models
+- **Light**: `{ id, color: 'red'|'yellow'|'green', timestamp }`
+- **Drive**: `{ id, name?, startTime, endTime?, duration?, lights[], redScore, greenScore, yellowCount, isActive }`
+- **DriveStats**: Comprehensive stats (totals, win rate, streaks, records, averages)
+
+### Game Rules
+- Red: +1 red score
+- Yellow: +2 green score (bonus)
+- Green: +1 green score
+- Win: greenScore > redScore
+- Auto-start: Drive begins on first light tap
+
+### Component Patterns
+- **HistoryGrid**: Fixed height 300px, scrollable, auto-scrolls to bottom
+- **ScoreBoard**: Flip animations, retro scoreboard style
+- **LightButton**: Circular, haptic feedback, size configurable (default 90px)
+- **Navigation**: 3 tabs (🚦 Drive, 📚 History, 📊 Stats), no headers
+
+### File Organization
+- Components: One component per file, export as named export
+- Types: Centralized in `src/types/index.ts`
+- Constants: Centralized in `src/constants/colors.ts`
+- Utils: Pure functions, well-documented
+
+## Important Notes
+- Score recalculation: When lights deleted/reordered, scores recalculated from scratch
+- Storage: AsyncStorage persists drives locally
+- Web support: Configured for GitHub Pages deployment (`npm run build:web`)
+- No explicit "Start Drive" button - auto-starts on first light tap
+
+## Code Style
+- TypeScript strict mode
+- Functional components with hooks
+- Named exports preferred
+- Inline styles for dynamic values, StyleSheet for static
+- Use `wp()`/`hp()` for all dimensions (responsive design)
+
+## When Making Changes
+- Maintain responsive design (use wp/hp/fontSize)
+- Preserve dark/light theme support
+- Keep score calculation logic consistent
+- Test on both mobile and web platforms
+- Follow existing component patterns
+
