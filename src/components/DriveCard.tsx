@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from 'react-
 import { Drive } from '../types';
 import { Colors, LightEmojis } from '../constants/colors';
 import { formatDate, formatTime, formatDuration } from '../utils/sharing';
-import { wp, fontSize } from '../utils/responsive';
+import { wp, hp, fontSize } from '../utils/responsive';
 
 interface DriveCardProps {
   drive: Drive;
@@ -15,9 +15,10 @@ export const DriveCard: React.FC<DriveCardProps> = ({ drive, onPress }) => {
   const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   const isWin = drive.greenScore > drive.redScore;
-  const redCount = drive.lights.filter(l => l.color === 'red').length;
-  const yellowCount = drive.lights.filter(l => l.color === 'yellow').length;
-  const greenCount = drive.lights.filter(l => l.color === 'green').length;
+  const lights = drive.lights || [];
+  const redCount = lights.filter(l => l.color === 'red').length;
+  const yellowCount = lights.filter(l => l.color === 'yellow').length;
+  const greenCount = lights.filter(l => l.color === 'green').length;
 
   return (
     <TouchableOpacity
