@@ -1,0 +1,61 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StatusBar } from 'expo-status-bar';
+import { useColorScheme } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { DriveProvider } from './src/contexts/DriveContext';
+import { ActiveDriveScreen } from './src/screens/ActiveDriveScreen';
+import { HistoryScreen } from './src/screens/HistoryScreen';
+import { StatsScreen } from './src/screens/StatsScreen';
+import { Colors } from './src/constants/colors';
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  const colorScheme = useColorScheme();
+  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <DriveProvider>
+        <NavigationContainer>
+          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
+              tabBarStyle: {
+                backgroundColor: colors.card,
+                borderTopColor: colors.border,
+              },
+              tabBarActiveTintColor: colors.tabIconSelected,
+              tabBarInactiveTintColor: colors.tabIconDefault,
+            }}
+          >
+            <Tab.Screen
+              name="Drive"
+              component={ActiveDriveScreen}
+              options={{
+                tabBarIcon: ({ color }) => <span style={{ fontSize: 24 }}>🚦</span>,
+              }}
+            />
+            <Tab.Screen
+              name="History"
+              component={HistoryScreen}
+              options={{
+                tabBarIcon: ({ color }) => <span style={{ fontSize: 24 }}>📚</span>,
+              }}
+            />
+            <Tab.Screen
+              name="Stats"
+              component={StatsScreen}
+              options={{
+                tabBarIcon: ({ color }) => <span style={{ fontSize: 24 }}>📊</span>,
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </DriveProvider>
+    </GestureHandlerRootView>
+  );
+}
