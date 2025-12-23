@@ -61,8 +61,9 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: wp(20),
-    marginVertical: hp(15),
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: wp(20),
   },
   board: {
     flexDirection: 'row',

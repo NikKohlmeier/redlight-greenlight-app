@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   statCard: {
-    width: widthPercentage(48),
+    width: '48%', // 48% width for 2 columns - works on all screen sizes
     padding: wp(20),
     borderRadius: wp(15),
     alignItems: 'center',

@@ -61,3 +61,34 @@ export const heightPercentage = (percentage: number): number => {
   return (SCREEN_HEIGHT * percentage) / 100;
 };
 
+/**
+ * Base font size for em calculations (typically 16px)
+ */
+const BASE_FONT_SIZE = 16;
+
+/**
+ * Get size in em units (relative to base font size)
+ * Similar to CSS em units - scales with font size
+ * @param em - Size in em units (e.g., 1.5 = 1.5em)
+ * @returns Size in pixels
+ */
+export const em = (em: number): number => {
+  return em * BASE_FONT_SIZE;
+};
+
+/**
+ * Get responsive em units (combines em with screen scaling)
+ * Scales with both font size and screen size
+ * @param em - Size in em units
+ * @returns Responsive size in pixels
+ */
+export const emWp = (em: number): number => {
+  const baseSize = em * BASE_FONT_SIZE;
+  return (baseSize / BASE_WIDTH) * SCREEN_WIDTH;
+};
+
+export const emHp = (em: number): number => {
+  const baseSize = em * BASE_FONT_SIZE;
+  return (baseSize / BASE_HEIGHT) * SCREEN_HEIGHT;
+};
+

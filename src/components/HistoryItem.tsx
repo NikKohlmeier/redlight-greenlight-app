@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity, StyleSheet, Alert, View } from 'react-native';
 import { Light } from '../types';
 import { LightColors } from '../constants/colors';
 import { wp } from '../utils/responsive';
@@ -36,25 +36,32 @@ export const HistoryItem: React.FC<HistoryItemProps> = ({
   };
 
   return (
-    <TouchableOpacity
-      style={[
-        styles.item,
-        {
-          backgroundColor: LightColors[light.color],
-          width: itemSize,
-          height: itemSize,
-          borderRadius: itemSize / 2,
-        },
-      ]}
-      onLongPress={handleLongPress}
-      delayLongPress={500}
-    />
+    <View style={styles.itemWrapper}>
+      <TouchableOpacity
+        style={[
+          styles.item,
+          {
+            backgroundColor: LightColors[light.color],
+            width: itemSize,
+            height: itemSize,
+            borderRadius: itemSize / 2,
+          },
+        ]}
+        onLongPress={handleLongPress}
+        delayLongPress={500}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  itemWrapper: {
+    width: '25%', // 4 columns = 25% each
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: wp(5),
+  },
   item: {
-    margin: wp(5),
     borderWidth: wp(2),
     borderColor: 'rgba(255, 255, 255, 0.5)',
     shadowColor: '#000',

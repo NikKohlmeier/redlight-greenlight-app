@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DriveProvider } from './src/contexts/DriveContext';
 import { ActiveDriveScreen } from './src/screens/ActiveDriveScreen';
@@ -36,21 +36,21 @@ export default function App() {
               name="Drive"
               component={ActiveDriveScreen}
               options={{
-                tabBarIcon: ({ color }) => <span style={{ fontSize: 24 }}>🚦</span>,
+                tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🚦</Text>,
               }}
             />
             <Tab.Screen
               name="History"
               component={HistoryScreen}
               options={{
-                tabBarIcon: ({ color }) => <span style={{ fontSize: 24 }}>📚</span>,
+                tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>📚</Text>,
               }}
             />
             <Tab.Screen
               name="Stats"
               component={StatsScreen}
               options={{
-                tabBarIcon: ({ color }) => <span style={{ fontSize: 24 }}>📊</span>,
+                tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>📊</Text>,
               }}
             />
           </Tab.Navigator>

@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Text, useColorScheme } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, useColorScheme, Dimensions } from 'react-native';
 import { Light } from '../types';
 import { HistoryItem } from './HistoryItem';
 import { Colors } from '../constants/colors';
-import { wp, hp, fontSize } from '../utils/responsive';
+import { wp, hp, fontSize, getScreenWidth } from '../utils/responsive';
 
 interface HistoryGridProps {
   lights: Light[];
@@ -32,6 +32,16 @@ export const HistoryGrid: React.FC<HistoryGridProps> = ({ lights, onDeleteLight 
     );
   }
 
+  // Calculate item size for 4 columns
+  // Account for container margin (wp(20) * 2), padding (wp(10) * 2), and item padding
+  const screenWidth = getScreenWidth();
+  const containerMargin = wp(20) * 2; // left + right margin
+  const containerPadding = wp(10) * 2; // left + right padding
+  const itemPadding = wp(5) * 2; // left + right padding per item wrapper
+  const totalItemPadding = itemPadding * 4; // 4 items per row
+  const availableWidth = screenWidth - containerMargin - containerPadding - totalItemPadding;
+  const itemSize = Math.min(availableWidth / 4, wp(80)); // Cap at wp(80) for very large screens
+
   return (
     <ScrollView
       ref={scrollViewRef}
@@ -43,6 +53,7 @@ export const HistoryGrid: React.FC<HistoryGridProps> = ({ lights, onDeleteLight 
           key={light.id}
           light={light}
           onDelete={onDeleteLight}
+          size={itemSize}
         />
       ))}
     </ScrollView>
@@ -53,21 +64,17 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     marginHorizontal: wp(20),
-    marginVertical: hp(10),
     borderRadius: wp(15),
-    height: hp(300),
-    position: 'static',
-    transform: [{ rotate: '360deg' }],
   },
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: wp(10),
+    justifyContent: 'flex-start',
   },
   emptyContainer: {
-    height: hp(200),
+    flex: 1,
     marginHorizontal: wp(20),
-    marginVertical: hp(10),
     borderRadius: wp(15),
     justifyContent: 'center',
     alignItems: 'center',
