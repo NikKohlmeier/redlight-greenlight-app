@@ -4,18 +4,19 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  useColorScheme,
   SafeAreaView,
 } from 'react-native';
 import { useDrive } from '../contexts/DriveContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { Colors, LightEmojis } from '../constants/colors';
 import { formatDuration } from '../utils/sharing';
 import { wp, hp, fontSize, widthPercentage } from '../utils/responsive';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 export const StatsScreen: React.FC = () => {
   const { stats, pastDrives } = useDrive();
-  const colorScheme = useColorScheme();
-  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const { isDark } = useTheme();
+  const colors = isDark ? Colors.dark : Colors.light;
 
   if (pastDrives.length === 0) {
     return (
@@ -50,6 +51,9 @@ export const StatsScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
           <Text style={[styles.title, { color: colors.text }]}>Your Stats</Text>
+          <View style={styles.toggleContainer}>
+            <ThemeToggle />
+          </View>
         </View>
 
         {/* Overview Section */}
@@ -177,6 +181,9 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     paddingVertical: hp(20),
+  },
+  toggleContainer: {
+    marginTop: hp(15),
   },
   title: {
     fontSize: fontSize(28),

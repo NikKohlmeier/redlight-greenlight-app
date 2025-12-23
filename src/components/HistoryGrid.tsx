@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Text, useColorScheme, Dimensions } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Dimensions } from 'react-native';
 import { Light } from '../types';
+import { useTheme } from '../contexts/ThemeContext';
 import { HistoryItem } from './HistoryItem';
 import { Colors } from '../constants/colors';
 import { wp, hp, fontSize, getScreenWidth } from '../utils/responsive';
@@ -12,8 +13,8 @@ interface HistoryGridProps {
 
 export const HistoryGrid: React.FC<HistoryGridProps> = ({ lights, onDeleteLight }) => {
   const scrollViewRef = useRef<ScrollView>(null);
-  const colorScheme = useColorScheme();
-  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const { isDark } = useTheme();
+  const colors = isDark ? Colors.dark : Colors.light;
 
   useEffect(() => {
     // Auto-scroll to bottom when new light is added

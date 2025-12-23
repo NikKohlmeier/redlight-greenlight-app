@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  useColorScheme,
   Alert,
 } from 'react-native';
 import { Drive } from '../types';
+import { useTheme } from '../contexts/ThemeContext';
 import { Colors, LightEmojis } from '../constants/colors';
 import { generateShareText, copyToClipboard, formatDuration } from '../utils/sharing';
 import { wp, hp, fontSize, widthPercentage } from '../utils/responsive';
@@ -28,8 +28,8 @@ export const EndDriveModal: React.FC<EndDriveModalProps> = ({
   onSave,
 }) => {
   const [driveName, setDriveName] = useState('');
-  const colorScheme = useColorScheme();
-  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const { isDark } = useTheme();
+  const colors = isDark ? Colors.dark : Colors.light;
 
   const winner = drive.greenScore > drive.redScore
     ? { text: 'Green Wins!', emoji: '🎉', points: drive.greenScore - drive.redScore }

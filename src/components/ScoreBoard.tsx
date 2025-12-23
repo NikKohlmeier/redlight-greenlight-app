@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '../contexts/ThemeContext';
 import { Colors } from '../constants/colors';
 import { wp, hp, fontSize } from '../utils/responsive';
 
@@ -12,8 +13,7 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = ({
   redScore,
   greenScore,
 }) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const { isDark } = useTheme();
 
   const FlipDigit: React.FC<{ value: number; color: 'red' | 'green' }> = ({ value, color }) => {
     const bgColor = color === 'red' ? '#2a1a1a' : '#1a2a1a';

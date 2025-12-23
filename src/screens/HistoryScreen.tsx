@@ -4,11 +4,11 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  useColorScheme,
   SafeAreaView,
   Alert,
 } from 'react-native';
 import { useDrive } from '../contexts/DriveContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { DriveCard } from '../components/DriveCard';
 import { Colors } from '../constants/colors';
 import { Drive } from '../types';
@@ -16,8 +16,8 @@ import { wp, hp, fontSize } from '../utils/responsive';
 
 export const HistoryScreen: React.FC = () => {
   const { pastDrives, deleteDrive } = useDrive();
-  const colorScheme = useColorScheme();
-  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const { isDark } = useTheme();
+  const colors = isDark ? Colors.dark : Colors.light;
 
   const handleDrivePress = (drive: Drive) => {
     Alert.alert(

@@ -4,10 +4,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  useColorScheme,
   SafeAreaView,
 } from 'react-native';
 import { useDrive } from '../contexts/DriveContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { LightButton } from '../components/LightButton';
 import { ScoreBoard } from '../components/ScoreBoard';
 import { HistoryGrid } from '../components/HistoryGrid';
@@ -18,8 +18,8 @@ import { wp, hp, fontSize } from '../utils/responsive';
 export const ActiveDriveScreen: React.FC = () => {
   const { currentDrive, addLight, deleteLight, endDrive } = useDrive();
   const [showEndModal, setShowEndModal] = useState(false);
-  const colorScheme = useColorScheme();
-  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const { isDark } = useTheme();
+  const colors = isDark ? Colors.dark : Colors.light;
 
   const handleEndDrive = () => {
     if (currentDrive && currentDrive.lights.length > 0) {

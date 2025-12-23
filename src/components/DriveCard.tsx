@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Drive } from '../types';
+import { useTheme } from '../contexts/ThemeContext';
 import { Colors, LightEmojis } from '../constants/colors';
 import { formatDate, formatTime, formatDuration } from '../utils/sharing';
 import { wp, hp, fontSize } from '../utils/responsive';
@@ -11,8 +12,8 @@ interface DriveCardProps {
 }
 
 export const DriveCard: React.FC<DriveCardProps> = ({ drive, onPress }) => {
-  const colorScheme = useColorScheme();
-  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const { isDark } = useTheme();
+  const colors = isDark ? Colors.dark : Colors.light;
 
   const isWin = drive.greenScore > drive.redScore;
   const lights = drive.lights || [];
