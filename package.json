@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build:web": "npx expo export:web --output-dir docs",
+    "build:web": "npx expo export --platform web --output-dir docs",
     "deploy:web": "npm run build:web && echo 'Build complete! Push the docs folder to deploy.'"
   },
   "keywords": [],
