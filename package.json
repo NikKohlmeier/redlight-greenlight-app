@@ -2,13 +2,14 @@
   "name": "redlight-greenlight",
   "version": "1.0.0",
   "description": "Red Light Green Light - Track lights on your drives",
+  "homepage": "https://nikkohlmeier.github.io/redlight-greenlight-app",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build:web": "npx expo export --platform web --output-dir docs",
+    "build:web": "npx expo export --platform web --output-dir docs && node scripts/fix-gh-pages-paths.js",
     "deploy:web": "npm run build:web && echo 'Build complete! Push the docs folder to deploy.'"
   },
   "keywords": [],
